@@ -145,6 +145,8 @@ def edit(sno):
                 post=Posts(title=title,tagline=tagline,slug=slug,content=content,img_file=img_file,date=date)
                 db.session.add(post)
                 db.session.commit()
+                return redirect("/dashboard")
+                
             else:
                 post=Posts.query.filter_by(sno=sno).first()
                 post.title=title
@@ -154,10 +156,10 @@ def edit(sno):
                 post.date=date
                 post.img_file=img_file 
                 db.session.commit() 
-                redirect('/edit/',sno)  
+                return redirect('/dashboard')  
         post=Posts.query.filter_by(sno=sno).first()
-        return render_template("edit.html",params=params,post=post)
-    return redirect("/dashboard")
+        return render_template("edit.html",params=params,post=post,sno=sno)
+    
 
 @app.route("/logout")
 def logout():
